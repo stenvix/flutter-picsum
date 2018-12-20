@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import '../models/picture.dart';
 import '../services/picsum.dart';
-import '../screens/picture_screen.dart';
+import '../lists/pictures_list_item.dart';
 
 class PicturesScreen extends StatefulWidget {
   final double width;
@@ -46,43 +45,13 @@ class _PicturesScreenState extends State<PicturesScreen> {
     return futureBuilder;
   }
 
-  Widget _buildRow(Picture picture) {
-    var ratio = picture.width / widget.width;
-    var width = widget.width.toInt();
-    var height = picture.height ~/ ratio;
-    picture.imageUrl = "https://picsum.photos/$width/$height?image=${picture.id}";
-    // return Container(
-    //     child: GestureDetector(
-    //   child: CachedNetworkImage(
-    //     imageUrl: "https://picsum.photos/$width/$height?image=${picture.id}",
-    //     placeholder: Center(child: CircularProgressIndicator()),
-    //     errorWidget: Icon(Icons.error),
-    //   ),
-    //   onTap: () {
-    //     print("Tapped");
-    //   },
-    // ));
-
-    return ListTile(
-        contentPadding: EdgeInsets.all(0),
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> PictureScreen(picture: picture)));
-        },
-        title: Hero(tag: 'imageHero${picture.id}',
-        child: CachedNetworkImage(
-          imageUrl: picture.imageUrl,
-          placeholder: Center(child: CircularProgressIndicator()),
-          errorWidget: Icon(Icons.error, size: 64.0),
-        )));
-  }
-
   Widget _buildPictureList(
       BuildContext context, AsyncSnapshot<List<Picture>> snapshot) {
     List<Picture> values = snapshot.data;
     return ListView.builder(
         itemCount: values.length,
         itemBuilder: (context, i) {
-          return _buildRow(values[i]);
+          return PictureListItem(picture:values[i], width: widget.width);
         });
   }
 
