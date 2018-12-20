@@ -37,7 +37,7 @@ class _PicturesScreenState extends State<PicturesScreen> {
               if (snapshot.hasError) {
                 return new Text(snapshot.error);
               }
-              return Scrollbar(child: _buildPictureList(context, snapshot));
+              return _buildPictureList(context, snapshot);
             }
         }
       },
@@ -50,7 +50,7 @@ class _PicturesScreenState extends State<PicturesScreen> {
     var ratio = picture.width / widget.width;
     var width = widget.width.toInt();
     var height = picture.height ~/ ratio;
-
+    picture.imageUrl = "https://picsum.photos/$width/$height?image=${picture.id}";
     // return Container(
     //     child: GestureDetector(
     //   child: CachedNetworkImage(
@@ -66,13 +66,14 @@ class _PicturesScreenState extends State<PicturesScreen> {
     return ListTile(
         contentPadding: EdgeInsets.all(0),
         onTap: (){
-          Navigator.of(context).push(MaterialPageRoute(builder: (context)=> PictureScreen(picture: picture)));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> PictureScreen(picture: picture)));
         },
-        title: CachedNetworkImage(
-          imageUrl: "https://picsum.photos/$width/$height?image=${picture.id}",
+        title: Hero(tag: 'imageHero${picture.id}',
+        child: CachedNetworkImage(
+          imageUrl: picture.imageUrl,
           placeholder: Center(child: CircularProgressIndicator()),
-          errorWidget: Icon(Icons.error),
-        ));
+          errorWidget: Icon(Icons.error, size: 64.0),
+        )));
   }
 
   Widget _buildPictureList(

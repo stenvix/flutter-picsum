@@ -7,6 +7,7 @@ class Picture{
   final String author;
   final String authorUrl;
   final String postUrl;
+  String imageUrl;
 
   Picture({this.format, this.width, this.height, this.filename, this.id, this.author, this.authorUrl, this.postUrl});
 
