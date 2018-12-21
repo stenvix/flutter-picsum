@@ -20,7 +20,7 @@ class _IconWidgetState extends State<IconWidget> with TickerProviderStateMixin {
   @override
   void initState() {
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 1));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
 
     _animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
       parent: _controller,

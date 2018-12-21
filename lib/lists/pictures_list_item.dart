@@ -72,27 +72,27 @@ class _PictureListItemState extends State<PictureListItem> {
         children: <Widget>[
           _photoHero(),
           Positioned.fill(
-              child: AnimatedOpacity(
-                  opacity: 1.0,
-                  duration: Duration(milliseconds: 300),
+              child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                   child: Container(
                     decoration:
-                        BoxDecoration(color: Colors.black.withOpacity(0.5)),
-                    child: IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          IconWidget(onTap: onFavoriteTap, isFavorite: _isFavorite),
-                          GestureDetector(
-                              onTap: onPictureInfoTap,
-                              child: Icon(Icons.info,
-                                  size: 64.0,
-                                  color: Theme.of(context).primaryColor))
-                        ],
-                      ),
+                        BoxDecoration(color: Colors.white.withOpacity(0)),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        IconWidget(
+                            onTap: onFavoriteTap, isFavorite: _isFavorite),
+                        GestureDetector(
+                            onTap: onPictureInfoTap,
+                            child: Icon(Icons.info,
+                                size: 64.0,
+                                color: Theme.of(context).primaryColor))
+                      ],
                     ),
-                  )))
+                  )
+                  // ),
+                  ))
         ],
       ),
     );
