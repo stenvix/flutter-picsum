@@ -1,9 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '../config.dart';
 import '../screens/picture_screen.dart';
 import '../models/picture.dart';
-import '../elements/favorite.dart';
+import '../elements/icon.dart';
 
 class PictureListItem extends StatefulWidget {
   final Picture picture;
@@ -82,12 +83,15 @@ class _PictureListItemState extends State<PictureListItem> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         IconWidget(
-                            onTap: onFavoriteTap, isFavorite: _isFavorite),
-                        GestureDetector(
+                            onTap: onFavoriteTap,
+                            color: Colors.red,
+                            icon: _isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border),
+                        IconWidget(
                             onTap: onPictureInfoTap,
-                            child: Icon(Icons.info,
-                                size: 64.0,
-                                color: Theme.of(context).primaryColor))
+                            color: Colors.white,
+                            icon: Icons.info)
                       ],
                     ),
                   )
@@ -104,7 +108,7 @@ class _PictureListItemState extends State<PictureListItem> {
     var width = widget.width.toInt();
     var height = _picture.height ~/ ratio;
     _picture.imageUrl =
-        "https://picsum.photos/$width/$height?image=${_picture.id}";
+        "${Config.picsumBaseUrl}$width/$height?image=${_picture.id}";
 
     if (!_isSelected) {
       return _photoItem();
